@@ -427,8 +427,8 @@ export default function AIChat() {
         </div>
 
         {/* Input Area */}
-        <div className="relative z-10 p-2 sm:p-4 bg-black/50 backdrop-blur-md">
-          <div className="flex items-center w-full max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-full px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-md hover:border-white/20 transition-colors">
+        <div className="sticky bottom-0 z-20 p-2 sm:p-4 bg-black/50 backdrop-blur-md border-t border-white/5">
+          <div className="flex items-center w-full max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-full px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-md hover:border-white/20 transition-colors shadow-2xl">
             <input
               type="text"
               value={input}
