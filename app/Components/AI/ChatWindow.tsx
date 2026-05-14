@@ -331,10 +331,10 @@ export default function AIChat() {
       )}
 
       {/* ================= MAIN ================= */}
-      <main className="flex-1 relative flex flex-col">
+      <main className="flex-1 relative flex flex-col h-full">
 
-        {/* Top bar */}
-        <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 text-sm text-gray-400">
+        {/* Top bar - fixed on mobile */}
+        <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 text-sm text-gray-400 bg-black/90 backdrop-blur-md z-30 flex-shrink-0 sticky top-0">
           <button
             onClick={() => setIsSidebarOpen(true)}
             className="md:hidden p-2 rounded-md hover:bg-white/10 transition"
@@ -348,7 +348,7 @@ export default function AIChat() {
           <span className="hidden md:block">General / SwiftAI v1.0</span>
         </div>
 
-        {/* Chat Messages Area */}
+        {/* Chat Messages Area - scrollable */}
         <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 py-4 sm:py-6 scrollbar-hide overflow-x-hidden">
           {!hasStartedChat ? (
             <div className="flex flex-col items-center justify-center text-center py-4 md:py-8">
@@ -389,7 +389,7 @@ export default function AIChat() {
               </div>
             </div>
           ) : (
-            <div className="max-w-4xl mx-auto space-y-4">
+            <div className="max-w-4xl mx-auto space-y-4 pb-2">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -426,8 +426,8 @@ export default function AIChat() {
           )}
         </div>
 
-        {/* Input Area */}
-        <div className="sticky bottom-0 z-20 p-2 sm:p-4 bg-black/50 backdrop-blur-md border-t border-white/5">
+        {/* Input Area - fixed on mobile */}
+        <div className="sticky bottom-0 z-20 p-2 sm:p-4 bg-black/80 backdrop-blur-md border-t border-white/5 flex-shrink-0">
           <div className="flex items-center w-full max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-full px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-md hover:border-white/20 transition-colors shadow-2xl">
             <input
               type="text"
