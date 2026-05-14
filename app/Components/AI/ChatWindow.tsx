@@ -330,11 +330,11 @@ export default function AIChat() {
         />
       )}
 
-      {/* ================= MAIN ================= */}
-      <main className="flex-1 relative flex flex-col h-full">
-
-        {/* Top bar - fixed on mobile */}
-        <div className="h-14 border-b border-white/10 flex items-center justify-between px-6 text-sm text-gray-400 bg-black/90 backdrop-blur-md z-30 flex-shrink-0 sticky top-0">
+      {/* ================= MAIN CONTAINER ================= */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden">
+        
+        {/* Top Bar - FIXED */}
+        <div className="flex-shrink-0 h-14 border-b border-white/10 flex items-center justify-between px-4 sm:px-6 text-sm text-gray-400 bg-black/95 backdrop-blur-md z-30">
           <button
             onClick={() => setIsSidebarOpen(true)}
             className="md:hidden p-2 rounded-md hover:bg-white/10 transition"
@@ -348,86 +348,88 @@ export default function AIChat() {
           <span className="hidden md:block">General / SwiftAI v1.0</span>
         </div>
 
-        {/* Chat Messages Area - scrollable */}
-        <div className="relative z-10 flex-1 overflow-y-auto px-2 sm:px-4 py-4 sm:py-6 scrollbar-hide overflow-x-hidden">
-          {!hasStartedChat ? (
-            <div className="flex flex-col items-center justify-center text-center py-4 md:py-8">
-              <h2 className="text-sm md:text-4xl font-light mb-2 md:mb-4 max-w-full md:max-w-2xl font-dosis px-2 md:px-0 leading-tight">
-                Unleash AI with SwiftAI: Chatbot-Driven Innovation at Your Fingertips
-              </h2>
-              <p className="text-gray-400 text-xs md:text-base max-w-xl mb-4 md:mb-8">
-                Transform your ideas with SwiftAI's AI chatbot, designed to deliver endless possibilities and intelligent solutions
-              </p>
+        {/* Scrollable Content Area - This is the only scrollable part */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="px-2 sm:px-4 py-4 sm:py-6">
+            {!hasStartedChat ? (
+              <div className="flex flex-col items-center justify-center text-center py-4 md:py-8">
+                <h2 className="text-sm md:text-4xl font-light mb-2 md:mb-4 max-w-full md:max-w-2xl font-dosis px-2 md:px-0 leading-tight">
+                  Unleash AI with SwiftAI: Chatbot-Driven Innovation at Your Fingertips
+                </h2>
+                <p className="text-gray-400 text-xs md:text-base max-w-xl mb-4 md:mb-8">
+                  Transform your ideas with SwiftAI's AI chatbot, designed to deliver endless possibilities and intelligent solutions
+                </p>
 
-              {/* Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12 w-full max-w-5xl px-2">
-                {[{
-                  icon: <FiCode />,
-                  title: "Code Generator",
-                  desc: "Generate CSS for body: Arial font, gray background, dark text",
-                },
-                {
-                  icon: <FiFileText />,
-                  title: "Presentation & Slide",
-                  desc: "Generate a slide design with clean layout and bold headings",
-                },
-                {
-                  icon: <FiLayout />,
-                  title: "Marketing Copy",
-                  desc: "Write a compelling headline for a new e-commerce website",
-                },
-              ].map((card, i) => (
-                <div
-                  key={i}
-                  className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left backdrop-blur-md hover:bg-white/10 transition cursor-pointer"
-                >
-                  <div className="mb-4 text-lg">{card.icon}</div>
-                  <h3 className="mb-2">{card.title}</h3>
-                  <p className="text-gray-400 text-sm">{card.desc}</p>
-                </div>
-              ))}
-              </div>
-            </div>
-          ) : (
-            <div className="max-w-4xl mx-auto space-y-4 pb-2">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in w-full overflow-hidden`}
-                >
+                {/* Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12 w-full max-w-5xl px-2">
+                  {[{
+                    icon: <FiCode />,
+                    title: "Code Generator",
+                    desc: "Generate CSS for body: Arial font, gray background, dark text",
+                  },
+                  {
+                    icon: <FiFileText />,
+                    title: "Presentation & Slide",
+                    desc: "Generate a slide design with clean layout and bold headings",
+                  },
+                  {
+                    icon: <FiLayout />,
+                    title: "Marketing Copy",
+                    desc: "Write a compelling headline for a new e-commerce website",
+                  },
+                ].map((card, i) => (
                   <div
-                    className={`max-w-[90%] md:max-w-[80%] rounded-2xl px-4 sm:px-5 py-2 sm:py-3 leading-relaxed break-words whitespace-pre-wrap overflow-hidden ${
-                      message.role === "user"
-                        ? "bg-linear-to-r from-white/15 to-white/10 text-white border border-white/20 shadow-lg"
-                        : "bg-linear-to-r from-white/5 to-white/10 text-gray-200 border border-white/10 shadow-md"
-                    }`}
+                    key={i}
+                    className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left backdrop-blur-md hover:bg-white/10 transition cursor-pointer"
                   >
-                    {message.role === "assistant" ? (
-                      <span dangerouslySetInnerHTML={{ __html: formatMessage(message.content) }} />
-                    ) : (
-                      message.content
-                    )}
+                    <div className="mb-4 text-lg">{card.icon}</div>
+                    <h3 className="mb-2 font-medium">{card.title}</h3>
+                    <p className="text-gray-400 text-sm">{card.desc}</p>
                   </div>
+                ))}
                 </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-linear-to-r from-white/5 to-white/10 border border-white/10 rounded-2xl px-5 py-3 text-gray-400 shadow-md">
-                    <div className="flex space-x-2">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+              </div>
+            ) : (
+              <div className="max-w-4xl mx-auto space-y-4">
+                {messages.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in w-full overflow-hidden`}
+                  >
+                    <div
+                      className={`max-w-[90%] md:max-w-[80%] rounded-2xl px-4 sm:px-5 py-2 sm:py-3 leading-relaxed break-words whitespace-pre-wrap overflow-hidden ${
+                        message.role === "user"
+                          ? "bg-gradient-to-r from-white/15 to-white/10 text-white border border-white/20 shadow-lg"
+                          : "bg-gradient-to-r from-white/5 to-white/10 text-gray-200 border border-white/10 shadow-md"
+                      }`}
+                    >
+                      {message.role === "assistant" ? (
+                        <span dangerouslySetInnerHTML={{ __html: formatMessage(message.content) }} />
+                      ) : (
+                        message.content
+                      )}
                     </div>
                   </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          )}
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-gradient-to-r from-white/5 to-white/10 border border-white/10 rounded-2xl px-5 py-3 text-gray-400 shadow-md">
+                      <div className="flex space-x-2">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Input Area - fixed on mobile */}
-        <div className="sticky bottom-0 z-20 p-2 sm:p-4 bg-black/80 backdrop-blur-md border-t border-white/5 flex-shrink-0">
+        {/* Input Area - FIXED at bottom */}
+        <div className="flex-shrink-0 p-2 sm:p-4 bg-black/80 backdrop-blur-md border-t border-white/5">
           <div className="flex items-center w-full max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-full px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-md hover:border-white/20 transition-colors shadow-2xl">
             <input
               type="text"
@@ -439,7 +441,7 @@ export default function AIChat() {
             />
             <button
               onClick={toggleListening}
-              className={`mx-2 p-2 rounded-full transition hover:scale-110 transform ${
+              className={`mx-2 p-2 rounded-full transition hover:scale-110 transform flex-shrink-0 ${
                 isListening
                   ? "bg-red-500/20 text-red-400 animate-pulse"
                   : "text-gray-400 hover:text-white"
@@ -450,7 +452,7 @@ export default function AIChat() {
             <button
               onClick={sendMessage}
               disabled={isLoading || !input.trim()}
-              className="bg-white/10 p-2 rounded-full hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition hover:scale-105 transform"
+              className="bg-white/10 p-2 rounded-full hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition hover:scale-105 transform flex-shrink-0"
             >
               <FiSend />
             </button>
