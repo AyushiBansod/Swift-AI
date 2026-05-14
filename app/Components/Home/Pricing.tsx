@@ -109,6 +109,7 @@ export default function Pricing() {
             >
               
               {/* Icon */}
+              
               <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 mb-6 text-lg">
                 {plan.icon}
               </div>
